@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.practice.spring.security.mapper.NoteMapper">
+
+    <select id="selectNoteAll" resultType="com.practice.spring.security.model.vo.NoteVO">
+        SELECT ID
+             , CONTENT
+             , TITLE
+             , CREATED_AT
+             , UPDATED_AT
+          FROM NOTE
+         ORDER BY ID
+    </select>
+
+    <select id="selectNoteUserDesc" resultType="com.practice.spring.security.model.vo.NoteVO">
+        SELECT ID
+             , CONTENT
+             , TITLE
+             , CREATED_AT
+             , UPDATED_AT
+          FROM NOTE
+         WHERE USERNAME = #{user}
+         ORDER BY ID
+    </select>
+
+    <select id="selectNoteUserOne" resultType="com.practice.spring.security.model.vo.NoteVO">
+        SELECT ID
+             , CONTENT
+             , TITLE
+             , CREATED_AT
+             , UPDATED_AT
+          FROM NOTE
+         WHERE USERNAME = #{user}
+           AND ID = #{noteId}
+         ORDER BY ID
+    </select>
+
+    <insert id="insertNote">
+        insert into note
+        (ID, CONTENT, TITLE, USERNAME, CREATED_AT, UPDATED_AT )
+        values
+        ((select nvl(max(id)+1,1) from note), #{title}, #{content}, #{username}, sysdate, sysdate)
+    </insert>
+
+    <delete id="deleteNote">
+        delete note where id = #{id}
+    </delete>
+
+
+
+
+</mapper>

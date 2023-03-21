@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.practice.spring.security.mapper.UserMapper">
+
+	<select id="selectUsername" resultType="com.practice.spring.security.model.vo.UserVO">
+		SELECT ID, USERNAME, PASSWORD, AUTHORITY
+		FROM USER
+		WHERE username = #{name}
+	</select>
+
+	<insert id="insertUser">
+		insert into user
+		(ID, USERNAME, PASSWORD, AUTHORITY)
+		VALUES
+		((select nvl(max(id)+1, 1) from user),#{username}, #{password}, #{authority})
+	</insert>
+
+
+
+</mapper>

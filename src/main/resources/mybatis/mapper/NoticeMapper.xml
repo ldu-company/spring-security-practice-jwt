@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.practice.spring.security.mapper.NoticeMapper">
+
+    <select id="selectNoticeAll" resultType="com.practice.spring.security.model.vo.NoticeVO">
+        SELECT ID
+             , CONTENT
+             , TITLE
+             , CREATED_AT
+             , UPDATED_AT
+          FROM NOTICE
+         ORDER BY ID
+    </select>
+
+    <insert id="insertNotice">
+        insert into notice
+        (ID , TITLE , CONTENT , CREATED_AT, UPDATED_AT )
+        VALUES
+        ((select nvl(max(id)+1, 1) from notice), #{title}, #{content}, sysdate, sysdate)
+
+    </insert>
+
+    <delete id="deleteNotice">
+        delete notice where id = #{id}
+    </delete>
+
+
+
+
+</mapper>
